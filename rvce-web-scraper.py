@@ -6,7 +6,7 @@ from time import sleep
 import csv
 driver = webdriver.Chrome()
 count = 0
-rvb=["CV","BT","CS","EC"]
+rvb=["CV","BT","CS","EC","IM"]
 
 for i in rvb:
     branch=i
@@ -15,7 +15,7 @@ for i in rvb:
     with open(fname,"a",newline="") as f:
         thewriter=csv.writer(f)
         thewriter.writerow(["USN","Name","CGPA"])
-        for i in range(1,200):
+        for i in range(60,200):
             driver.get("http://results.rvce.edu.in/")
             
             #if(i<100):
@@ -51,9 +51,10 @@ for i in rvb:
             driver.find_element_by_xpath("""//*[@id="submit"]""").click()
             #sleep(10)
             try:
-                count=0
+                
                 sem=driver.find_element_by_xpath("""//*[@id="no-more-tables"]/table[1]/tbody/tr/td[4]""")
                 semt=sem.text
+                count=0
                 if(str(semt)=="6"):
                     n=driver.find_element_by_xpath("""//*[@id="no-more-tables"]/table[1]/tbody/tr/td[3]/b""")
                     name=n.text
@@ -64,7 +65,8 @@ for i in rvb:
                     #print(usn,name,cgpa)
             except:
                 count+=1
-                if(count==7):
+                print(count)
+                if(count==5):
                     break
                 print("",end="")
 f.close()
